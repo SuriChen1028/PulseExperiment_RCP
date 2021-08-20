@@ -45,4 +45,24 @@ def one_path(Et, θ, args=(), dt=1, Y0=1.1):
     logNt[i+1] = Γ(Yt[i+1], γ_3_j)
     return Yt, logNt
 
+def simulation_Yt(Et, θ, y_underline=1.5, Y0 = 1.1, dt=1):
+    T = len(Et)
+    Yt = np.zeros(T+1)
+    Yt[0] = Y0
+    for i in range(T):
+        if Yt[i] <= y_underline:
+            Yt[i + 1] = Yt[i] + θ * Et[i] * dt
+        else:
+            break
+    Yt = Yt[np.nonzero(Yt)]
     
+    return Yt
+
+def aggregated(path, δ = 0.01, dt=1):
+    # reverse order
+    T = len(path) 
+    Time = np.arange(0, T)
+    path_aggregated = np.zeros(T)
+    for i in range(T):
+        path_aggregated[i] = np.sum(np.exp(- δ * (Time[i:] - Time[i]) ) * path[i:] * dt)
+    return path_aggregated
