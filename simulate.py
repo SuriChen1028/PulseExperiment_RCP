@@ -17,6 +17,7 @@ Es = pd.read_csv("data/RCP85_EMISSIONS.csv", header=6)
 years = np.array([0, 5, 15, 25, 35, 45, 55, 65, 75, 85])
 # e_funcs = [interpolate.interp1d(years, Es[i]) for i in range(Es.shape[0])]
 # e_funcs = interpolate.interp1d(years, Es)
+years.shape
 #%%
 E_extended = Es[Es[Es.columns[0]] >= 2020].to_numpy()[:, 1:].T
 E_extended.shape
@@ -42,11 +43,11 @@ Et_pulsed = E_extended_pulsed
 #%%
 Et_annual.shape
 #%%
-γ_3_list = np.linspace(0, 1./3, 20)
+γ_3_list = np.linspace(0, 0.3853*2, 20)
 N = 1000
 args_damage = (0.00017675, 0.0044, γ_3_list)
-force_run = False
-if not os.path.exists("res_simul_extended") or force_run:
+force_run = True
+if not os.path.exists("res_simul_extended_steep") or force_run:
     args_list = []
     for i in range(len(Et_annual)):
         Et = Et_annual[i]
@@ -59,13 +60,13 @@ if not os.path.exists("res_simul_extended") or force_run:
     delayed_funcs = [delayed(one_path)(Et, θ_j, args_damage) for Et, θ_j in args_list for i in range(N)]
     parallel_pool = Parallel(n_jobs=number_of_cpu)
     res = parallel_pool(delayed_funcs)
-    # res = simulation_random(args_list) 
-    pickle.dump(res, open("res_simul_extended", "wb"))
+    # res = simulation_random(args_list)
+    pickle.dump(res, open("res_simul_extended_steep", "wb"))
 else:
     print("Results already computed.")
 
 # pulsed
-if not os.path.exists("res_simul_extended_pulsed"):
+if not os.path.exists("res_simul_extended_pulsed_steep") or force_run:
     args_list = []
     for i in range(len(Et_pulsed)):
         Et = Et_pulsed[i]
@@ -77,8 +78,8 @@ if not os.path.exists("res_simul_extended_pulsed"):
     delayed_funcs = [delayed(one_path)(Et, θ_j, args_damage) for Et, θ_j in args_list for i in range(N)]
     parallel_pool = Parallel(n_jobs=number_of_cpu)
     res = parallel_pool(delayed_funcs)
-    # res = simulation_random(args_list) 
-    pickle.dump(res, open("res_simul_extended_pulsed", "wb"))
+    # res = simulation_random(args_list)
+    pickle.dump(res, open("res_simul_extended_pulsed_steep", "wb"))
 else:
     print("Results already computed.")
 #%%
@@ -112,12 +113,12 @@ ME_list[4]["MU_e"].shape
 Yt_list[0]
 #%%
 # save res
-if not os.path.exists("data/res_MU"):
-    with open("data/res_MU", "wb") as handle:
+if not os.path.exists("data/res_MU_steep"):
+    with open("data/res_MU_steep", "wb") as handle:
         pickle.dump(ME_list, handle)
 else:
     print("Results already stored.")
-ME_list = pickle.load(open("data/res_MU_long", "rb"))
+ME_list = pickle.load(open("data/res_MU_steep", "rb"))
 #%%
 plt.plot(Et_annual[4])
 #%%
