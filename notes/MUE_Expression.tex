@@ -1,0 +1,47 @@
+%% LyX 2.3.6.2 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+\usepackage[T1]{fontenc}
+\usepackage{esint}
+\usepackage{babel}
+\begin{document}
+\title{{\normalsize{}Marginal Utility of Emissions:}}
+
+\maketitle
+From the paper, the marginal utility of emissions is given in equation
+(11). This equation gives us the following expression:
+
+\[
+\frac{\eta}{\tilde{e}}=-\frac{d\phi(y)}{dy}\sum_{\ell=1}^{L}\omega_{\ell}\theta_{\ell}-\frac{d^{2}\phi(y)}{(dy)^{2}}|\varsigma|^{2}\tilde{e}+\frac{(1-\eta)}{\delta}[(\gamma_{1}+\gamma_{2}y)\sum_{\ell=1}^{L}\omega_{\ell}\theta_{\ell}+\gamma_{2}|\varsigma|^{2}\tilde{e}]
+\]
+
+The discounted value would be given by 
+
+\[
+\exp(-\delta t)\frac{\eta}{\tilde{e}}=\exp(-\delta t)\{-\frac{d\phi(y)}{dy}\sum_{\ell=1}^{L}\omega_{\ell}\theta_{\ell}-\frac{d^{2}\phi(y)}{(dy)^{2}}|\varsigma|^{2}\tilde{e}+\frac{(1-\eta)}{\delta}[(\gamma_{1}+\gamma_{2}y)\sum_{\ell=1}^{L}\omega_{\ell}\theta_{\ell}+\gamma_{2}|\varsigma|^{2}\tilde{e}]\}
+\]
+
+We can then integrate that up to get the aggregated marginal utility
+impact of reducing emissions by one unit
+
+\[
+\int_{0}^{\infty}\exp(-\delta t)\frac{\eta}{\tilde{e}}dt=\int_{0}^{\infty}\exp(-\delta t)\{-\frac{d\phi(y)}{dy}\sum_{\ell=1}^{L}\omega_{\ell}\theta_{\ell}-\frac{d^{2}\phi(y)}{(dy)^{2}}|\varsigma|^{2}\tilde{e}+\frac{(1-\eta)}{\delta}[(\gamma_{1}+\gamma_{2}y)\sum_{\ell=1}^{L}\omega_{\ell}\theta_{\ell}+\gamma_{2}|\varsigma|^{2}\tilde{e}]\}dt
+\]
+
+In practive, the emissions pathways only go out 80 years, so we would
+get something like
+
+\[
+\sum_{t=0}^{80}\exp(-\delta t)\frac{\eta}{\tilde{e}}dt=\sum_{t=0}^{80}\exp(-\delta t)\{-\frac{d\phi(y)}{dy}\sum_{\ell=1}^{L}\omega_{\ell}\theta_{\ell}-\frac{d^{2}\phi(y)}{(dy)^{2}}|\varsigma|^{2}\tilde{e}+\frac{(1-\eta)}{\delta}[(\gamma_{1}+\gamma_{2}y)\sum_{\ell=1}^{L}\omega_{\ell}\theta_{\ell}+\gamma_{2}|\varsigma|^{2}\tilde{e}]\}dt
+\]
+
+I think the discrete time approximation for $\exp(-\delta t)$ is
+$\frac{1}{1+\delta t}$.
+\end{document}
